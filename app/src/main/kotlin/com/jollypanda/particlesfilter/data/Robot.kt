@@ -24,9 +24,7 @@ class Robot(val widthConstraint: Int,
 
     init {
         x = randomizer.nextDouble() * widthConstraint
-//        x =  50.0
         y = randomizer.nextDouble() * heightConsntraint
-//        y = heightConsntraint / 2.0
         oldX = x
         oldY = y
     }
@@ -36,14 +34,10 @@ class Robot(val widthConstraint: Int,
         oldY = y
 
         x = randomizer.nextDouble() * widthConstraint + (randomizer.nextDouble() * ERROR - ERROR / 2)
-//        x += 30
         y = randomizer.nextDouble() * heightConsntraint + (randomizer.nextDouble() * ERROR - ERROR / 2)
-//        y = oldY
 
-        sensorDx = (x - oldX) //+ (randomizer.nextDouble() * ERROR - ERROR / 2)
-//        sensorDx = (dx) + (randomizer.nextDouble() * ERROR - ERROR / 2)
-        sensorDy = (y - oldY) //+ (randomizer.nextDouble() * ERROR - ERROR / 2)
-//        sensorDy = (dy) + (randomizer.nextDouble() * ERROR - ERROR / 2)
+        sensorDx = (x - oldX)
+        sensorDy = (y - oldY)
     }
 
     fun getErroredX(): Double {
