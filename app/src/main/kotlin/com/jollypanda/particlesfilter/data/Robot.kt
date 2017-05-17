@@ -10,7 +10,7 @@ import java.util.*
 class Robot(val widthConstraint: Int,
             val heightConsntraint: Int) {
 
-    val ERROR = 25.0
+    val ERROR = 50.0
     private val randomizer = Random()
 
     private var oldX = 0.0

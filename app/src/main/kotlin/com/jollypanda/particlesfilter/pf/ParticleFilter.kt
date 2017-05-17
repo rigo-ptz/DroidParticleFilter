@@ -47,17 +47,12 @@ class ParticleFilter(val robot: Robot,
     fun move() {
         robot.move()
 
-        val forDelete = arrayListOf<Particle>()
         particlesList.forEach {
             it.move(robot)
             if (it.x < 0 || it.x >= widthConstraint
                     || it.y < 0 || it.y >= heightConsntraint)
                 it.weight = 0.0
         }
-        var i = 0
-        i += 1
-        particlesList.removeAll(forDelete)
-        particlesList.forEach { it.weight = 1.0 / particlesList.size }
         Log.e("MOVE", "#####################")
         var sumWeight = 0.0
         var maxWeight = 0.0
@@ -73,7 +68,10 @@ class ParticleFilter(val robot: Robot,
         Log.e("MOVE", "#####################")
     }
 
-    fun filtrate() {
+    fun filtrate(): Int {
+        if (particlesList.size == 1)
+            return step
+
         step += 1
 
         Log.e("FILTER", "#####################")
@@ -161,6 +159,7 @@ class ParticleFilter(val robot: Robot,
 //        particlesList.sortWith(kotlin.Comparator { l, r ->
 //            return@Comparator if (l.distance > r.distance) 1 else if (l.distance < r.distance) -1 else 0
 //        })
+        return -1
     }
 
     private fun calculateNormalDistribution(value: Double, middle: Double, error: Double): Double {

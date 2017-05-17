@@ -3,6 +3,7 @@ package com.jollypanda.particlesfilter.ui.android.activities
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import android.view.View.VISIBLE
 import com.jollypanda.particlesfilter.R
 import com.jollypanda.particlesfilter.data.Robot
 import com.jollypanda.particlesfilter.pf.ParticleFilter
@@ -27,7 +28,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var pf: ParticleFilter
 
     val hc: Handler.Callback = Handler.Callback {
-        vParticle.updateDroid(pf.robot, pf.particlesList)
+        when (it.what) {
+            -2 -> vParticle.updateDroid(pf.robot, pf.particlesList)
+            -1 -> return@Callback true
+            else -> {
+                tvStepCount.text = "${it.what} steps"
+                tvStepCount.visibility = VISIBLE
+            }
+        }
         return@Callback true
     }
 
@@ -52,8 +60,9 @@ class MainActivity : AppCompatActivity() {
         val timer = Timer()
         timer.scheduleAtFixedRate(1000, 2000) {
             pf.move()
-            handler.sendEmptyMessage(0)
-            pf.filtrate()
+            handler.sendEmptyMessage(-2)
+            val stepCount = pf.filtrate()
+            handler.sendEmptyMessage(stepCount)
         }
     }
 }
